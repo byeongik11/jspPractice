@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+<Resource name="jdbc/orcl" 
+   auth="Container"
+   type="javax.sql.DataSource" 
+   username="jsp" 
+   password="jsp"
+   driverClassName="oracle.jdbc.driver.OracleDriver"
+   factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory"
+   url="jdbc:oracle:thin:@localhost:1521:XE"
+   maxActive="500" 
+   maxIdle="100"/> 
+   
+   
+  <Resource name="jdbc/mySQLDB" 
+   auth="Container"
+   type="javax.sql.DataSource" 
+   username="java" 
+   password="java"
+   driverClassName="com.mysql.cj.jdbc.Driver"
+   factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory"
+   url="jdbc:mysql://localhost:3306/testDB"
+   maxActive="500" 
+   maxIdle="100"/>  
+   
+   
+   <Resource name="jdbc/mySQLZip" 
+   auth="Container"
+   type="javax.sql.DataSource" 
+   username="java" 
+   password="java"
+   driverClassName="com.mysql.cj.jdbc.Driver"
+   factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory"
+   url="jdbc:mysql://localhost:3306/zip?serverTimezone=UTC"
+   maxActive="500" 
+   maxIdle="100"/> 
+    
+</Context>
