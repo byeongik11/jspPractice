@@ -21,19 +21,20 @@ public class BoardReplyAction implements Action {
 		String pageNum = request.getParameter("page");
 		System.out.println("페이지 번호 : " + pageNum);
 		//파라미터 값을 가져옴
+		int num = Integer.parseInt(request.getParameter("board_num"));
 		String id = request.getParameter("board_id");
 		String subject = request.getParameter("board_subject");
 		String content = request.getParameter("board_content");
 		int ref = Integer.parseInt(request.getParameter("board_re_ref"));
-		int lev = Integer.parseInt(request.getParameter("board_re_lev"));
-		int seq = Integer.parseInt(request.getParameter("board_re_seq"));
+/*		int lev = Integer.parseInt(request.getParameter("board_re_lev"));
+		int seq = Integer.parseInt(request.getParameter("board_re_seq"));*/
 		
 		//답글 중 가장 최근 답글이 위로 올라가게 처리
 		// 그러기 위해 답글 순서 seq를 1증가 시킴
 		
-		boardData.setBoard_re_ref(ref);
-		boardData.setBoard_re_seq(seq);
-		dao.updateReSeq(boardData);
+//		boardData.setBoard_re_ref(ref);
+//		boardData.setBoard_re_seq(seq);
+//		dao.updateReSeq(boardData);
 		
 		
 		//답글 저장
@@ -43,8 +44,9 @@ public class BoardReplyAction implements Action {
 		boardData.setBoard_subject(subject);
 		boardData.setBoard_content(content);
 		boardData.setBoard_re_ref(ref);
-		boardData.setBoard_re_lev(lev+1);
-		boardData.setBoard_re_seq(seq+1);
+		boardData.setBoard_parent(num);
+/*		boardData.setBoard_re_lev(lev+1);
+		boardData.setBoard_re_seq(seq+1);*/
 		
 		boolean result = dao.boardInsert(boardData);
 		

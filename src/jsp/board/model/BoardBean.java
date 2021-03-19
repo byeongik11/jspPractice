@@ -13,6 +13,7 @@ public class BoardBean {
 	private int board_re_seq;		//답변글 순서
 	private int board_count;		//글 조회수;
 	private Date board_date;		//글 작성일;
+	private int board_parent;		//부모글 번호
 	
 	public int getBoard_num() {
 		return board_num;
@@ -74,6 +75,13 @@ public class BoardBean {
 	public void setBoard_date(Date board_date) {
 		this.board_date = board_date;
 	}
+	public int getBoard_parent() {
+		return board_parent;
+	}
+	public void setBoard_parent(int board_parent) {
+		this.board_parent = board_parent;
+	}
+	
 	
 	
 }

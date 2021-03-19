@@ -32,7 +32,15 @@
     			location.href='BoardReplyFormAction.bo?num=${board.board_num}&page=${pageNum}';
     		}
     	}
-    </script>
+    	
+    	function doAction(value) {
+    		if(value == 0) {
+    			alert("수정버튼 클릭");
+    		} else if(value == 1) {
+    			location.href = "BoardDeleteAction.bo?num=${board.board_num}";
+    		}
+    	}
+    </script> 
 </head>
 <body>
  
@@ -79,8 +87,8 @@
                 <!-- 로그인을 해야만 답글을 달수 있도록 함, 수정, 삭제 버튼일 경우 글 작성자일 경우만 보이도록 처리 -->
                 <c:if test="${sessionScope.sessionID !=null}">
                 	<c:if test="${sessionScope.sessionID == board.board_id }">
-    	                <input type="button" value="수정" >
-        	            <input type="button" value="삭제" >
+    	                <input type="button" value="수정" onclick="doAction(0)" >
+        	            <input type="button" value="삭제" onclick="doAction(1)">
  	               </c:if>
                     <input type="button" value=답글 onclick="changeView(1) ">    
                 </c:if>

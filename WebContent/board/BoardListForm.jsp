@@ -56,7 +56,7 @@
             <tr>
                 <td>${board.board_num}</td>
                 <td align="left">
-                	<c:if test="${board.board_re_lev > 0 }">
+                	<c:if test="${board.board_re_lev > 1 }">
                 		<c:forEach begin="1" end="${board.board_re_lev }">
                 			&nbsp;&nbsp;
                 		</c:forEach>

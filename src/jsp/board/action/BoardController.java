@@ -119,8 +119,8 @@ public class BoardController extends HttpServlet {
 				action = new BoardReplyAction();
 				forward = action.execute(request, response);
 				
-			} else if(command.equals("MemberLogoutAction.do")) {	//로그아웃 처리
-				action = new MemberLogoutAction();
+			} else if(command.equals("BoardDeleteAction.bo")) {	// 글 삭제 처리
+				action = new BoardDeleteAction();
 				forward = action.execute(request, response);
 				
 			} else if(command.equals("MemberJoinAction.do")) {		//회원가입처리

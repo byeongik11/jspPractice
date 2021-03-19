@@ -30,8 +30,8 @@
 		<input type="hidden" name="board_id" value="${sessionScope.sessionID }">
 		<input type="hidden" name="board_num" value="${board.board_num }" />
 		<input type="hidden" name="board_re_ref" value="${board.board_re_ref }">
-		<input type="hidden" name="board_re_lev" value="${board.board_re_lev }">
-		<input type="hidden" name="board_re_seq" value="${board.board_re_seq }">
+<%-- 		<input type="hidden" name="board_re_lev" value="${board.board_re_lev }">
+		<input type="hidden" name="board_re_seq" value="${board.board_re_seq }"> --%>
 		
 		
 		<table>

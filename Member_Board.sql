@@ -16,3 +16,6 @@ create sequence board_num;
 alter table Member_Board
 add constraint pk_board_id foreign key(board_id)
 references jsp_member(id);
+
+ALTER TABLE MEMBER_BOARD
+ADD(BOARD_PARENT NUMBER(10));
