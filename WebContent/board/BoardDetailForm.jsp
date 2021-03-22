@@ -36,6 +36,7 @@
     	function doAction(value) {
     		if(value == 0) {
     			alert("수정버튼 클릭");
+    			location.href='BoardUpdateFormAction.bo?num=${board.board_num}&page=${pageNum}';
     		} else if(value == 1) {
     			location.href = "BoardDeleteAction.bo?num=${board.board_num}";
     		}

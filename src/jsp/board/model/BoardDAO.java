@@ -421,6 +421,98 @@ public class BoardDAO
 		return result;
 	} // end updateCount
 	
+	//삭제할 파일명을 가져온다.
+	public String getFileName(int boardNum) {
+		String fileName = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			
+			StringBuffer sql = new StringBuffer();
+			sql.append("SELECT board_file FROM member_board WHERE board_num=?");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	//글 삭제
+	public boolean deleteBoard(int boardNum) throws SQLException {
+		boolean result = false;
+		
+		try {
+			conn = DBConnection.getConnection();
+			conn.setAutoCommit(false);
+			
+			StringBuffer sql = new StringBuffer();
+			sql.append(" DELETE FROM member_board");
+			sql.append(" WHERE board_num IN  ");
+			sql.append(" (SELECT board_num   ");
+			sql.append(" FROM member_board   ");
+			sql.append(" START WITH board_num = ?" );
+			sql.append(" CONNECT BY PRIOR board_num = board_parent) ");
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setInt(1, boardNum);
+			
+			int flag = pstmt.executeUpdate();
+			
+			if(flag > 0) {
+				result = true;
+				conn.commit();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			conn.rollback();
+		} finally {
+			close();
+		}
+		return result;
+	}
+	
+	
+	//글 수정
+	public boolean updateBoard(BoardBean board) throws SQLException {
+		boolean result = false;
+		
+		try {
+			conn = DBConnection.getConnection();
+			conn.setAutoCommit(false);
+			
+			StringBuffer sql = new StringBuffer();
+			sql.append("UPDATE member_board SET");
+			sql.append(" board_subject = ? " );
+			sql.append(" ,board_content=? " );
+			sql.append(" ,board_file=? " 	);
+			sql.append(" ,board_date = sysdate " );
+			sql.append("WHERE board_num = ? " );
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, board.getBoard_subject());
+			pstmt.setString(2, board.getBoard_content());
+			pstmt.setString(3, board.getBoard_file());
+			pstmt.setInt(4, board.getBoard_num());
+			
+			int flag = pstmt.executeUpdate();
+			
+			if(flag > 0) {
+				result = true;
+				conn.commit();
+			} else {
+				result = false;
+				conn.rollback();
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			conn.rollback();
+			
+		} finally {
+			close();
+		}
+		return result;
+	}
+	
 	
 	// DB 자원해제
 	private void close()
@@ -432,4 +524,7 @@ public class BoardDAO
 			throw new RuntimeException(e.getMessage());
 		}
 	} // end close()
+	
+	
+	
 }

@@ -75,6 +75,15 @@ public class BoardController extends HttpServlet {
 				forward.setRedirect(false);
 				forward.setNextPath(form + "BoardReplyForm.jsp");
 				
+			} else if(command.equals("BoardUpdateForm.bo")) {		//글 수정 화면으로
+				forward = new ActionForward();
+				forward.setRedirect(false);
+				forward.setNextPath(form + "BoardUpdateForm.jsp");
+				
+			} else if(command.equals("BoardUpdateFormAction.bo")) {  //글 수정 화면처리
+				action = new BoardUpdateFormAction();
+				forward = action.execute(request, response);
+				
 			} else if(command.equals("BoardWriteAction.bo")) {		//게시판 글쓰기 처리
 				action  = new BoardWriteAction();
 				forward = action.execute(request, response);				
@@ -94,7 +103,7 @@ public class BoardController extends HttpServlet {
 			} else if(command.equals("BoardReplyFormAction.bo")) {	//답글작성화면 처리
 				action = new BoardReplyFormAction();
 				forward = action.execute(request, response);
-				
+			
 			} else if(command.equals("ModifyForm.do")) {	//회원정보 수정화면으로
 				forward = new ActionForward();
 				forward.setRedirect(false);
@@ -122,6 +131,11 @@ public class BoardController extends HttpServlet {
 			} else if(command.equals("BoardDeleteAction.bo")) {	// 글 삭제 처리
 				action = new BoardDeleteAction();
 				forward = action.execute(request, response);
+			
+			} else if(command.equals("BoardUpdateAction.bo")) {	// 글 수정 처리
+				action = new BoardUpdateAction();
+				forward = action.execute(request, response);
+				
 				
 			} else if(command.equals("MemberJoinAction.do")) {		//회원가입처리
 				action = new MemberJoinAction();

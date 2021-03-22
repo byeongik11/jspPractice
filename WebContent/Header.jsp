@@ -33,6 +33,9 @@
 			
 		} else if(value == "6") {		//게시판 리스트 화면으로
 			location.href= "BoardListAction.bo";
+		
+		} else if(value == "7") {		//방명록 메뉴
+			location.href= "GuestbookListAction.ge";	//방명록 목록 보여주기
 		}
 	}
 	
@@ -58,7 +61,7 @@
 			</c:if>
 		
 			<button id="joinBtn" class="btn btn-info" onclick="changeView(6)">게시판</button>
-		
+			<button id="joinBtn" class="btn btn-info" onclick="changeView(7)">방명록</button>
 			<!-- 관리자 로그인->  -->
 			
 			<c:if test="${sessionScope.sessionID == 'admin' }">
