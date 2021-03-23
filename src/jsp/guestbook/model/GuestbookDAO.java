@@ -171,6 +171,42 @@ public class GuestbookDAO
 		return list;
 	}
 	
+	//방명록에서 하나의 정보를 가져온다.
+	public GuestbookBean getGuestbook(int g_num) {
+		GuestbookBean guestbook = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			
+			StringBuffer sql = new StringBuffer();
+			sql.append("SELECT * FROM guestbook WHERE guestbook_no = ?");
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setInt(1, g_num);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				guestbook = new GuestbookBean();
+				guestbook.setGuestbook_level(rs.getInt("LEVEL"));
+				guestbook.setGuestbook_no(rs.getInt("guestbook_no"));
+				guestbook.setGuestbook_id(rs.getString("guestbook_id"));
+				guestbook.setGuestbook_password(rs.getString("guestbook_password"));
+				guestbook.setGuestbook_content(rs.getString("guestbook_content"));
+				guestbook.setGuestbook_group(rs.getInt("guestbook_group"));
+				guestbook.setGuestbook_parent(rs.getInt("guestbook_parent"));
+				guestbook.setGuestbook_date(rs.getDate("guestbook_date"));
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return guestbook;
+	}
+	
+	
 	
 	// DB 자원해제
 	private void close()
@@ -183,6 +219,7 @@ public class GuestbookDAO
 			throw new RuntimeException(e.getMessage());
 		}
 	} // end close()
+	
 	
 	
 	

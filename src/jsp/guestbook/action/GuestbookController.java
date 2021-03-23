@@ -59,11 +59,6 @@ public class GuestbookController extends HttpServlet {
 				forward.setRedirect(false);
 				forward.setNextPath(form + "GuestbookForm.jsp");
 				
-			} else if(command.equals("BoardWriteForm.bo")) {		//게시판 글쓰기 화면으로 
-				forward = new ActionForward();
-				forward.setRedirect(false);
-				forward.setNextPath(form + "BoardWriteForm.jsp");
-			
 			} else if(command.equals("BoardDetailForm.bo")) {		//게시판 상세글 보기 화면으로
 				forward = new ActionForward();
 				forward.setRedirect(false);
@@ -79,7 +74,13 @@ public class GuestbookController extends HttpServlet {
 				forward.setRedirect(false);
 				forward.setNextPath(form + "BoardUpdateForm.jsp");
 				
-				
+			} else if(command.equals("GuestbookReplyAction.ge")) {		//방명록 답글 처리
+				action = new GuestbookReplyAction();
+				try {
+					forward =action.execute(request, response);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				
 			} else if(command.equals("GuestbookWriteAction.ge")) {		//방명록 글 등록 처리
 				action = new GuestbookWriteAction();
@@ -92,6 +93,8 @@ public class GuestbookController extends HttpServlet {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+			} else if(command.equals("GuestbookReplyFormAction.ge")) {	//방명록 답글 화면 표시 처리
+				action = new GuestbookReplyFormAction();
 			}
 				
 			

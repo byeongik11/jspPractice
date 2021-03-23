@@ -10,6 +10,9 @@ public class GuestbookBean {
 	private int guestbook_group;		//그룹번호
 	private int guestbook_parent;		//부모글 번호
 	private Date guestbook_date;		//작성일
+	private int guestbook_level;		//답변글 깊이
+	
+	
 	
 	public int getGuestbook_no() {
 		return guestbook_no;
@@ -52,6 +55,12 @@ public class GuestbookBean {
 	}
 	public void setGuestbook_date(Date guestbook_date) {
 		this.guestbook_date = guestbook_date;
+	}
+	public int getGuestbook_level() {
+		return guestbook_level;
+	}
+	public void setGuestbook_level(int guestbook_level) {
+		this.guestbook_level = guestbook_level;
 	}
 	
 	

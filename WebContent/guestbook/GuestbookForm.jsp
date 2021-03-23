@@ -54,6 +54,13 @@
 			return false;
 		}
 	}
+	
+	function openReplyForm(guestbook_no) {
+		//부모창 이름
+		window.name = "replyForm";
+		//window.open("open할 window", "자식창 이름", "팝업창 옵션");
+		window.open("GuestbookReplyFormAction.ge?num="+guestbook_no+"&page=${spage}", "rForm", "width=570, height=350, resizable = no, scrollbars=no"); 
+	}
 
 </script>
 </head>
@@ -71,8 +78,17 @@
 			</div>
 			<table>
 				<tr>
-					<td id="title">이름</td>
-					<td><input type="text" name="guestbook_id" id="guestbook_id"></td>
+					<td id="title">이름 : </td>
+					<!-- 로그인 했을 경우 방명록의 이름 부분의 아이디를 세팅 -->
+					<c:if test="${sessionScope.sessionID!= null }">
+						<td>
+							${sessionScope.sessionID }
+							<input type="hidden" name="guestbook_id" value="${sessionScope.sessionID }">
+						</td>
+					</c:if>
+					<c:if test="${sessionScope.sessionID==null }">
+						<td><input type="text" name="guestbook_id" id="guestbook_id"></td>
+					</c:if>
 					<td id="title">비밀번호</td>
 					<td><input type="password" name="guestbook_password" id="guestbook_password"></td>
 				</tr>
@@ -100,9 +116,15 @@
 			<div id="comment">
 				<c:forEach var="guestbook" items="${requestScope.list }">
 					<hr size="1" width="700">
+					<c:if test="${guestbook.guestbook_level > 1 }">
+						<c:forEach begin="1" end="${guestbook.guestbook_level }">
+							&nbsp;&nbsp; 	<!-- 답변글인 경우 글 제목 앞에 공백을 준다. -->
+						</c:forEach>
+						<img alt="" src="img/reply_icon.gif">
+					</c:if>
 					<label>${guestbook.guestbook_id }</label>&nbsp;&nbsp;&nbsp;&nbsp;
 					<label>${guestbook.guestbook_date }</label>&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="#">[답변]</a>&nbsp;
+					<a href="#" onclick="openReplyForm(${guestbook.guestbook_no})">[답변]</a>&nbsp;
 					<a href="#">[수정]</a>&nbsp;
 					<a href="#">[삭제]</a><br>
 					${guestbook.guestbook_content } <br>
