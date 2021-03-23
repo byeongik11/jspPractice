@@ -20,6 +20,8 @@ public class GuestbookListAction implements Action
 		
 		// 현재 페이지 번호 만들기
 		int spage = 1;
+		int limit = 5;
+		int limitPage = 5;
 		String page = request.getParameter("page");
 		
 		if(page != null)	spage = Integer.parseInt(page);
@@ -31,17 +33,17 @@ public class GuestbookListAction implements Action
 		// 페이지 번호는 총 5개, 이후로는 [다음]으로 표시
 				
 		// 전체 페이지 수
-		int maxPage = (int)(listCount/5.0 + 0.9);
-
+		int maxPage = (int)((double)listCount/limit+0.95);
+		System.out.println(maxPage);
 		// 만약 사용자가 주소창에서 페이지 번호를 maxPage 보다 높은 값을 입력시
 		// maxPage에 해당하는 목록을 보여준다.
 		if(spage > maxPage) spage = maxPage;
 		ArrayList<GuestbookBean> list = dao.getGuestbookList(spage*5-4);
 		
 		//시작 페이지 번호
-		int startPage = 1;
+		int startPage = (((int)((double)spage / limitPage+0.9)) -1) * limitPage + 1;
 		//마지막 페이지 번호
-		int endPage = startPage + 4;
+		int endPage = startPage + limitPage -1;
 		if(endPage > maxPage)	endPage = maxPage;
 		
 		// 4개 페이지번호 저장
@@ -54,7 +56,7 @@ public class GuestbookListAction implements Action
 		
 		// 단순 조회이므로 forward()사용 (= DB의 상태변화 없으므로) 
 		forward.setRedirect(false);
-		forward.setNextPath("GuestbookForm.ge");
+		forward.setNextPath("GuestbookForm.ge?page="+ spage);
 		
 		return forward;
 	}

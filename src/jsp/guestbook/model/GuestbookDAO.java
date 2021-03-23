@@ -48,31 +48,29 @@ public class GuestbookDAO
 	} // end getSeq
 	
 	
-	public boolean guestbookInsert(GuestbookBean guestbook) throws SQLException {
-		
+	public boolean guestbookInsert(GuestbookBean guestbook)
+	{
 		boolean result = false;
 		
 		try {
-			
 			conn = DBConnection.getConnection();
-			
-			//수동커밋
+
+			// 자동 커밋을 false로 한다.
 			conn.setAutoCommit(false);
 			
 			StringBuffer sql = new StringBuffer();
 			sql.append("INSERT INTO GUESTBOOK");
-			sql.append("(guestbook_no, guestbook_id, guestbook_password, guestbook_content");
-			sql.append(" ,guestbook_group, guestbook_parent, guestbook_date)");
-			sql.append("VALUES(?,?,?,?,?,?,sysdate)");
+			sql.append(" (GUESTBOOK_NO, GUESTBOOK_ID, GUESTBOOK_PASSWORD, GUESTBOOK_CONTENT");
+			sql.append(" , GUESTBOOK_GROUP, GUESTBOOK_PARENT, GUESTBOOK_DATE)");
+			sql.append(" VALUES(?,?,?,?,?,?,sysdate)");
 			
-			int no = guestbook.getGuestbook_no();	//글번호
-			int group = guestbook.getGuestbook_group(); //그룹번호
-			int parent = guestbook.getGuestbook_parent();//부모글번호
+			int no = guestbook.getGuestbook_no();								// 글번호(시퀀스 값)
+			int group = guestbook.getGuestbook_group(); 	// 그룹번호
+			int parent = guestbook.getGuestbook_parent(); 	// 부모글번호
 			
-			if(parent == 0) {
-				group = no;		//부모글일경우 그룹번호와 글번호가 동일
-			}
-			
+			// 부모글일 경우 그룹번호와 글번호 동일
+			if(parent == 0) group = no;
+	
 			pstmt = conn.prepareStatement(sql.toString());
 			pstmt.setInt(1, no);
 			pstmt.setString(2, guestbook.getGuestbook_id());
@@ -80,25 +78,26 @@ public class GuestbookDAO
 			pstmt.setString(4, guestbook.getGuestbook_content());
 			pstmt.setInt(5, group);
 			pstmt.setInt(6, parent);
-			
+
 			int flag = pstmt.executeUpdate();
-			
-			if(flag > 0) {
+			if(flag > 0){
 				result = true;
-				conn.commit();
+				conn.commit(); // 완료시 커밋
 			}
 			
 		} catch (Exception e) {
+			try {
+				conn.rollback(); // 오류시 롤백
+			} catch (SQLException sqle) {
+				sqle.printStackTrace();
+			} 
 			e.printStackTrace();
-			conn.rollback();
-		} finally {
-			close();
+			throw new RuntimeException(e.getMessage());
 		}
 		
-		
-		return result;
-		
-	}
+		close();
+		return result;	
+	} // end boardInsert();	
 	
 	public int getGuestbookCount() {		//방명록 목록 갯수구하기
 		int result = 0;

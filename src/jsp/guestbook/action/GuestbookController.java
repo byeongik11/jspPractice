@@ -91,6 +91,7 @@ public class GuestbookController extends HttpServlet {
 				try {
 					forward = action.execute(request, response);
 				} catch (Exception e) {
+					System.out.println("페이지 오류");
 					e.printStackTrace();
 				}
 			} else if(command.equals("GuestbookReplyFormAction.ge")) {	//방명록 답글 화면 표시 처리

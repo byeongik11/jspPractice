@@ -134,9 +134,14 @@
 			
 			<!-- 페이지 부분 -->
              <div id="pageForm">
-                <c:if test="${startPage != 1}">
-                    <a href='GuestbookListAction.ge?page=${startPage-1}'>[ 이전 ]</a>
-                </c:if>
+             	<c:choose>
+             		<c:when test="${spage <=5 }">
+             			[이전]&nbsp;
+             		</c:when>
+             		<c:otherwise>
+             			<a href='GuestbookListAction.ge?page=${startPage-1}'>[ 이전 ]</a>
+             		</c:otherwise>
+             	</c:choose>
                 
                 <c:forEach var="pageNum" begin="${startPage}" end="${endPage}">
                     <c:if test="${pageNum == spage}">
@@ -147,7 +152,10 @@
                     </c:if>
                 </c:forEach>
                 
-                <c:if test="${endPage != maxPage }">
+                <c:if test="${spage >= maxPage }">
+                	[다음]&nbsp;
+                </c:if>
+                <c:if test="${spage < maxPage }">
                     <a href='GuestbookListAction.ge?page=${endPage+1 }'>[다음]</a>
                 </c:if>
             </div> 

@@ -30,6 +30,7 @@ public class GuestbookWriteAction implements Action {
 		if(result) {
 			System.out.println("등록완료");
 			forward.setRedirect(true);
+			System.out.println("리스트로 이동");
 			forward.setNextPath("GuestbookListAction.ge");
 		}
 		return forward;
